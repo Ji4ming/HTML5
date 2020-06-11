@@ -1,0 +1,328 @@
+<!-- HTML5Notes_Ji4ming_20200611 -->
+<!-- introduce some new features in HTML5 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5Notes_Ji4ming</title>
+    <!-- create new script for specific style -->
+
+    <!-- JavaScript instance: <script src="myscript.js"></script>   -->
+    <script>
+        document.createElement("newStyle")
+    </script>
+    <style type="text/css">
+        #div1, #div2 {width:100px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+
+        newStyle {
+            display: block;
+            background-color: #ddd;
+            padding: 25px;
+            font-size: 20px;
+        }
+        .red {color:red;}
+    </style>
+    <script>
+        function allowDrop(ev)
+        {
+            ev.preventDefault();
+        }
+
+        function drag(ev)
+        {
+            // Text 是一个 DOMString 表示要添加到 drag object 的拖动数据的类型。值是可拖动元素的 id ("drag1")
+            ev.dataTransfer.setData("Text",ev.target.id);
+        }
+
+        function drop(ev)
+        {
+            ev.preventDefault();
+            var data=ev.dataTransfer.getData("Text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+    </script>
+</head>
+<body>
+    <h1 class="red"> Create New Script for Specific Style: </a></h1>
+    <newStyle> newStyle tag has been generated in script tag above for this specific style </newStyle>
+
+    <h1 class="red"> HTML5 Canvas: </a></h1>
+    <a href="https://www.runoob.com/w3cnote/html5-canvas-intro.html"> 详细的 canvas 使用教程 </a><br>
+    <p>
+        HTML5 canvas（画布）元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成，canvas 标签只是图形容器，您必须使用脚本来绘制图形，你可
+        以通过多种方法使用 canvas 绘制路径,盒、圆、字符以及添加图像，比如在 Canvas 上画一个红色矩形，渐变矩形，彩色矩形，和一些彩色的文字。
+    </p>
+    <p> 以下是几个简单的例子（通常需要指定一个id属性）：</p>
+    <p> 创建一个画布： </p>
+    <canvas id="myCanvas1" width="400" height="200" style="border:1px solid #000000;"></canvas>
+    <p> canvas 元素本身是没有绘图能力的。所有的绘制工作必须在 JavaScript 内部完成，以下为绘制实例(请查看源代码)：</p>
+    <canvas id="myCanvas2" width="400" height="200" style="border:1px solid #000000;"></canvas>
+    <img src="pig1.jpg" id="pig1" hidden="true" alt="小猪佩奇" width="24" height="15"><br>
+    <script>
+        // 进入画布
+        var c=document.getElementById("myCanvas2");
+        // 声明绘画属性
+        var ctx=c.getContext("2d");
+        // 设置fillStyle属性可以是CSS颜色，渐变，或图案。fillStyle 默认设置是#000000（黑色）。 grd 在这里为渐变属性
+        // 创建渐变
+        var grd=ctx.createLinearGradient(0,0,200,0);
+        grd.addColorStop(0,"red");
+        grd.addColorStop(1,"white");
+        // 填充渐变
+        ctx.fillStyle=grd;
+        ctx.fillRect(0,0,300,150);
+        // 填充字体
+        ctx.font="30px Arial";
+        ctx.fillText("Hello World",20,100);     // problem -> 文字未显示
+        ctx.strokeText("Hello World",20,150);
+        // moveTo(x,y) 定义线条开始坐标
+        ctx.moveTo(0,0);
+        // lineTo(x,y) 定义线条结束坐标
+        ctx.lineTo(60,30);
+        // 画圆
+        ctx.arc(95,50,40,0,2*Math.PI);
+        // 添加图片
+        var img=document.getElementById("pig1");
+        img.onload = function() {
+            ctx.drawImage(img,300,150);     // problem -> 图片大小设置
+        }
+        // 结束
+        ctx.stroke();
+    </script>
+    <p><u> 更多详细实例请点击上文链接！ </u></p>
+
+    <h1 class="red"> HTML5 SVG: </a></h1>
+    <a href="https://www.runoob.com/svg/svg-tutorial.html"> 详细的 SVG 使用教程 </a><br>
+    <p> SVG 指可伸缩矢量图形 (Scalable Vector Graphics),使用 XML 格式定义图形,SVG 图像在放大或改变尺寸的情况下其图形质量不会有损失</p>
+    <p> 以下是一个简单的例子：</p>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+        <polygon points="100,10 40,180 190,60 10,60 160,180" style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;"/>
+    </svg>
+    <p><u> 更多详细实例请点击上文链接！ </u></p>
+
+    <h1 class="red"> HTML5 MathML: </a></h1>
+    <p> 用于数学表达式，此处为a^+b^=c^, MathML does not work on Google Chrome on my laptop, while safari does </p>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mrow>
+            <msup><mi>a</mi><mn>2</mn></msup>
+            <mo>+</mo>
+            <msup><mi>b</mi><mn>2</mn></msup>
+            <mo>=</mo>
+            <msup><mi>c</mi><mn>2</mn></msup>
+        </mrow>
+    </math>
+
+    <h1 class="red"> HTML5 Drag & Drop: </a></h1>
+    <p> try to drag the image into another box </p>
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img src="pig1.jpg" draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="70"></div>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+    <h1 class="red"> HTML5 Video: </a></h1>
+    <video width="320" height="240" controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+    </video>
+
+    <div>
+        <button onclick="playPause()">播放/暂停</button>
+        <button onclick="makeBig()">放大</button>
+        <button onclick="makeSmall()">缩小</button>
+        <button onclick="makeNormal()">普通</button>
+        <br>
+        <video id="video1" width="420">
+            <source src="movie.mp4" type="video/mp4">
+            <source src="movie.ogg" type="video/ogg">
+        </video><br>
+    </div>
+    <p>（需要在根目录下放置视频文件才能看到上面的效果）</p>
+    <script>
+        var myVideo=document.getElementById("video1");
+        function playPause()
+        {
+            if (myVideo.paused)
+                myVideo.play();
+            else
+                myVideo.pause();
+        }
+        function makeBig()
+        {
+            myVideo.width=560;
+        }
+        function makeSmall()
+        {
+            myVideo.width=320;
+        }
+        function makeNormal()
+        {
+            myVideo.width=420;
+        }
+    </script>
+
+    <h1 class="red"> HTML5 Audio: </a></h1>
+    <audio controls>
+        <source src="Wildcard.ogg" type="audio/ogg">
+        <source src="Wildcard.mp3" type="audio/mpeg">
+    </audio><br>
+
+    <h1 class="red"> input tag instances: </a></h1>
+
+    placeholder: <input type="text" name="fname" placeholder="First name"><br><br>
+    required:(输入内容不能为空) <input type="text" name="usrname" required><br><br>
+    选择你喜欢的颜色: <input type="color" name="favcolor"><br><br>
+    生日: <input type="date" name="bday"><br><br>
+    生日 (日期和时间):(Google Chrome 不支持) <input type="datetime" name="bdaytime"><br><br>
+    生日 (日期和时间): <input type="datetime-local" name="bdaytime"><br><br>
+    生日 (月和年): <input type="month" name="bdaymonth"><br><br>
+    选择周: <input type="week" name="week_year"><br><br>
+    E-mail: <input type="email" name="email"><br><br>
+    数量 ( 1 到 5 之间 ): <input type="number" name="quantity" min="1" max="5"step="1"><br><br>
+    定义一个不需要非常精确的数值（类似于滑块控制）:<input type="range" name="points" min="1" max="10"><br><br>
+    Search Google: <input type="search" name="googlesearch"><br><br>
+    电话号码: <input type="tel" name="usrtel"><br><br>
+    选择时间: <input type="time" name="usr_time"><br><br>
+    添加您的主页: <input type="url" name="homepage"><br><br>
+    表单元素：
+    <form action="demo-form.php" method="get">
+        <input list="browsers" name="browser">
+        <datalist id="browsers">
+            <option value="Internet Explorer">
+            <option value="Firefox">
+            <option value="Chrome">
+            <option value="Opera">
+            <option value="Safari">
+        </datalist>
+        加密: <keygen name="security">
+        <input type="submit">
+    </form><br>
+    output tag:
+    <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+        <input type="range" id="a" value="50">100
+        +<input type="number" id="b" value="50">
+        =<output name="x" for="a b"></output>
+    </form><br>
+    <hr>
+    自动填充：（特别好的例子）
+    <p>填写并提交表单，然后重新刷新页面查看如何自动填充内容。</p>
+    <p>注意 form 的 autocomplete 属性为  "on"（开），但是 e-mail 自动为“off”（关）。</p>
+    <form action="demo-form.php" autocomplete="on">
+        <p> autofocus 属性用于自动聚焦，输入符号起始于 first name(查看源代码) </p>
+        First name:<input type="text" name="fname" autofocus><br>
+        Last name: <input type="text" name="lname"><br>
+        E-mail: <input type="email" name="email" autocomplete="off"><br>
+        <input type="submit">
+    </form><br>
+    <hr>
+    <p> formaction 属性用于描述表单提交的 URL 地址,并且会覆盖 form 元素中的 action 属性，在这里 formaction 属性用于 type="submit"
+        和 type="image".（查看源代码）</p>
+    <p> formenctype 属性描述了表单提交到服务器的数据编码 (只对form表单中 method="post" 表单), formenctype 属性覆盖 form 元素的
+        enctype 属性。 该属性与 type="submit" 和 type="image" 配合使用。）</p>
+    <p> formmethod 属性定义了表单提交的方式,formmethod 属性覆盖了 form 元素的 method 属性。注意: 该属性可以与 type="submit" 和
+        type="image" 配合使用。</p>
+    <p> novalidate 属性是一个 boolean 属性,novalidate 属性描述了 input 元素在表单提交时无需被验证。formnovalidate 属性会覆盖 form
+        元素的novalidate属性. 注意: formnovalidate 属性与type="submit一起使用</p>
+    <form action="demo-form.php">
+        First name: <input type="text" name="fname"><br>
+        Last name: <input type="text" name="lname"><br>
+        <input type="submit" value="提交"><br>
+        <input type="submit" formaction="demo-admin.php" value="以 formaction 提交"><br>
+        <input type="submit" formenctype="multipart/form-data" value="以 formenctype 的 Multipart/form-data 提交"><br>
+        <input type="submit" formmethod="post" formaction="demo-post.php" value="使用 formmethod 的 POST 提交"><br>
+        <input type="submit" formnovalidate value="formnovalidate 不验证提交"><br>
+        <input type="submit" formtarget="_blank" value="提交到一个新的页面上"><br>
+    </form><br>
+    <hr>
+    <p> multiple 属性：实例：尝试选取一张或者多种图片 </p>
+    <form action="demo-form.php">
+        选择图片: <input type="file" name="img" multiple><br><br>
+        <input type="submit">
+    </form><br>
+    <hr>
+    <p> pattern 属性：用于文本域限定 </p>
+    <form action="demo-form.php">
+        Country code: <input type="text" name="country_code" pattern="[A-Za-z]{3}" title="Three letter country code">
+        <input type="submit">
+    </form><br>
+    <hr>
+    <p> step 属性：用于间隔限定，输入数字试试 </p>
+    <form action="demo-form.php">
+        <input type="number" name="points" step="11">
+        <input type="submit">
+    </form>
+
+    <h1 class="red"> HTML5 语义元素： </a></h1>
+    <section>
+        <h1>WWF(section)</h1>
+        <p>The World Wide Fund for Nature (WWF) is an international organization working on issues regarding the conservation, research and restoration of the environment, formerly named the World Wildlife Fund. WWF was founded in 1961.</p>
+    </section>
+    <hr>
+    <article>
+        <h1>Internet Explorer 9(article)</h1>
+        <p> Windows Internet Explorer 9(缩写为 IE9 )在2011年3月14日21:00 发布。</p>
+    </article>
+    <hr>
+    <nav>
+        <a href="/html/">HTML(nav)</a> |
+        <a href="/css/">CSS</a> |
+        <a href="/js/">JavaScript</a> |
+        <a href="/jquery/">jQuery</a>
+    </nav>
+    <hr>
+    <aside>
+        <h4>Epcot Center(aside)</h4>
+        <p>The Epcot Center is a theme park in Disney World, Florida.</p>
+    </aside>
+    <hr>
+    <header>
+        <h1>Internet Explorer 9(header)</h1>
+        <p> Windows Internet Explorer 9(缩写为 IE9 )是在2011年3月14日21:00发布的</p>
+    </header>
+    <hr>
+    <footer>
+        <p>Posted by: Hege Refsnes(footer)</p>
+    </footer>
+    <hr>
+    <figure>
+        <img src="pig1.jpg" alt="The Pulpit Rock" width="96" height="54">
+        <figcaption>Fig.1 - 小猪佩奇(figure) </figcaption>
+    </figure>
+
+    <h1 class="red"> HTML5 WebSocket: </a></h1>
+    <p> TODO: Server-Sent Events 服务器协议 </p>
+
+    <h1 class="red"> HTML5 Web 存储: </a></h1>
+    <p> TODO: HTML5 web 存储,一个比cookie更好的本地存储方 </p>
+    <p> localStorage - 用于长久保存整个网站的数据，保存的数据没有过期时间，直到手动去除 </p>
+    <p> sessionStorage - 用于临时保存同一窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据 </p>
+
+    <h1 class="red"> HTML5 SQL: </a></h1>
+    <p> TODO: HTML5 相关的数据库调用 </p>
+
+    <h1 class="red"> HTML5 缓存: </a></h1>
+    <p> TODO: HTML5 相关的应用程序缓存 </p>
+
+
+    <h1 class="red"> HTML5 服务器发送事件(Server-Sent Events)： </a></h1>
+    <p>获取服务端更新数据<p>
+    <div id="result"></div>
+    <script>
+        if(typeof(EventSource)!=="undefined")
+        {
+            var source=new EventSource("demo_sse.php");
+            source.onmessage=function(event)
+            {
+                document.getElementById("result").innerHTML+=event.data + "<br>";
+            };
+        }
+        else
+        {
+            document.getElementById("result").innerHTML="抱歉，你的浏览器不支持 server-sent 事件...";
+        }
+    </script>
+
+    <h1 class="red"> THE END </h1>
+    <hr>
+
+</body>
+</html>
